@@ -1,21 +1,23 @@
 package com.jjdx.studentmanage.DBMS.RandomData;
 
-import com.jjdx.studentmanage.DBMS.StudentService;
 import com.jjdx.studentmanage.pojo.Student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
+/**
+ 随机学生数据生成器
+ @ Author: 绝迹的星 <br>
+ @ Time: 2024/7/3 <br>
+ */
 public class DataCreator {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         //生成一些随机学生信息
         //List<Student> studentList = create(1000);
         //StudentService.insert(studentList);
     }
-
 
     private static List<Student> create(int n) {
         List<Student> studentList = new ArrayList<>();

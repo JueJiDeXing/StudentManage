@@ -315,7 +315,7 @@ public class CheckUtil {
     }
 
     /**
-     合法手机号, 以1开始的11位数字
+     合法电话号码, 以1开始的11位数字
      */
     public static boolean isValidPhone(String phone) {
         return CheckUtil.notNull(phone) &&
