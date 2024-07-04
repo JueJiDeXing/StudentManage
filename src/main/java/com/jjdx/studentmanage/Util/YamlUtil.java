@@ -27,34 +27,37 @@ public class YamlUtil {
     private YamlUtil() {// 无实例
     }
 
+    /**
+     项目启动, 读取配置文件, 若无法读取,则停止程序运行
+     */
     public static void start() {
-        if (!reLoad() || yMap == null || yMap.isEmpty()) {
-            System.out.println("配置文件加载失败, 尝试读取备份");
-            configFile = "app-config-备份.yml";
-            if (!reLoad() || yMap == null || yMap.isEmpty()) {
-                throw new NullPointerException("备份文件加载失败, 请检查文件");
-            }
-            try {
-
-                FileWriter output = new FileWriter("app-config.yml");
-                yaml.dump(yMap, output);
-                configFile = "app-config.yml";
-            } catch (Exception e) {
-                System.out.println("配置文件更改失败 -- " + e.getMessage());
-            }
+        yMap = reLoad();
+        if (yMap != null) return;
+        System.out.println("配置文件加载失败, 尝试读取备份");
+        configFile = "app-config-备份.yml";
+        yMap = reLoad();
+        if (yMap == null) {
+            throw new NullPointerException("备份文件加载失败, 请检查文件");
         }
+        try {
+            FileWriter output = new FileWriter("app-config.yml");
+            yaml.dump(yMap, output);
+            configFile = "app-config.yml";
+        } catch (Exception e) {
+            System.out.println("配置文件更改失败 -- " + e.getMessage());
+        }
+
     }
 
     /**
      重新加载配置文件
      */
-    private static boolean reLoad() {
+    private static HashMap<String, Object> reLoad() {
         try {
-            yMap = yaml.load(new FileInputStream(configFile));
-            return true;
+            return yaml.load(new FileInputStream(configFile));
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 

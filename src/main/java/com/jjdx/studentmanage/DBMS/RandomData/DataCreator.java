@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Random;
 
 public class DataCreator {
-    static Random random = new Random();
-
 
     public static void main(String[] args) throws Exception {
         //生成一些随机学生信息
-        //List<Student> studentList = create(100);
-        //studentList.forEach(System.out::println);
+        //List<Student> studentList = create(1000);
         //StudentService.insert(studentList);
     }
 

@@ -8,10 +8,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,7 +93,7 @@ public class StudentController {
         // 创建列并设置列名
         // 序号列
         TableColumn<Student, Integer> indexColumn = new TableColumn<>("");
-        indexColumn.setPrefWidth(80);
+        indexColumn.setMinWidth(60);
         indexColumn.setCellValueFactory(param -> {
             int value = tableView.getItems().indexOf(param.getValue()) + 1;// 序号
             return new SimpleIntegerProperty(value).asObject();
@@ -204,7 +206,8 @@ public class StudentController {
         File file = AlertUtil.alertDirectorySave();
         if (file == null) return;
         try {
-            ExcelUtil.saveAsExcel(tableView, new File(file.getPath() + "/" + "学生信息表.xlsx"));
+            File savePos = new File(file.getPath() + "/" + "学生信息表.xlsx");
+            ExcelUtil.saveAsExcel(tableView, savePos, true);
             AlertUtil.alertInfo("保存成功");
         } catch (Exception e) {
             AlertUtil.alertError("保存失败");

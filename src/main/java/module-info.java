@@ -28,4 +28,5 @@ module com.jjdx.studentmanage {
     exports com.jjdx.studentmanage.Controller;
     exports com.jjdx.studentmanage.DBMS.RandomData;
     opens com.jjdx.studentmanage.DBMS.RandomData to javafx.fxml;
+    opens com.jjdx.studentmanage.Util to javafx.fxml;
 }

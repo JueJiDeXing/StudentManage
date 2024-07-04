@@ -20,36 +20,35 @@ import java.util.List;
 
 /**
  Excel交互
+
  @ Author: 绝迹的星 <br>
- @ Time: 2024/7/2 <br>
- */
+ @ Time: 2024/7/2 <br> */
 public class ExcelUtil {
     /**
      保存表信息到excel
+
      @param table 表
-     @param file 保存位置
+     @param file  保存位置
      */
-    public static void saveAsExcel(TableView table, File file) throws IOException {
+    public static void saveAsExcel(TableView table, File file, boolean withOrderId) throws IOException {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet(file.getName());
 
         ObservableList<TableColumn> columns = table.getColumns();
         Row headerRow = sheet.createRow(0);
-        for (int i = 1; i < columns.size(); i++) {// 第一列是序号, 不需要导出
-            headerRow.createCell(i - 1).setCellValue(columns.get(i).getText());
+        int offset = withOrderId ? 1 : 0;// 如果有序号, 则跳过第一列
+        for (int i = offset; i < columns.size(); i++) {// 创建标题行
+            headerRow.createCell(i - offset).setCellValue(columns.get(i).getText());
         }
-
         int rowIndex = 1;
-        for (Object row : table.getItems()) {
+        for (Object row : table.getItems()) {// 数据行
             Row dataRow = sheet.createRow(rowIndex++);
-            for (int i = 1; i < columns.size(); i++) {
-                dataRow.createCell(i - 1).setCellValue(columns.get(i).getCellData(row).toString());
+            for (int i = offset; i < columns.size(); i++) {
+                dataRow.createCell(i - offset).setCellValue(columns.get(i).getCellData(row).toString());
             }
-        }
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            workbook.write(fos);
-        } finally {
-            workbook.close();
+            try (FileOutputStream fos = new FileOutputStream(file)) {
+                workbook.write(fos);
+            }
         }
     }
 
@@ -77,8 +76,8 @@ public class ExcelUtil {
                     case "班级" -> student.setClassName(cell.getStringCellValue());
                     case "年龄" -> student.setAge(Integer.parseInt(cell.getStringCellValue()));
                     case "性别" -> student.setSex(cell.getStringCellValue());
-                    case "生日" ->
-                            student.setBirthday(cell.getDateCellValue().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                    case "生日" -> student.setBirthday(cell.getDateCellValue().toInstant()
+                            .atZone(ZoneId.systemDefault()).toLocalDate());
                     case "政治面貌" -> student.setOutlook(cell.getStringCellValue());
                     case "籍贯" -> student.setNativePlace(cell.getStringCellValue());
                     case "家庭住址" -> student.setAddress(cell.getStringCellValue());

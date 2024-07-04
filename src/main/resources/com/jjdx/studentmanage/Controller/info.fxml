@@ -6,14 +6,17 @@
             style="-fx-alignment: center;-fx-font-family: SimSun-ExtB;-fx-font-size: 15"
             xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.jjdx.studentmanage.Controller.InfoController">
-    <HBox prefWidth="1000" alignment="CENTER_RIGHT" style="-fx-padding: 20">
-        <Button onAction="#save">导出</Button>
-    </HBox>
+
     <VBox alignment="CENTER">
-        <Label alignment="CENTER" prefHeight="80.0" prefWidth="1100.0"
-               style="-fx-font-family: SimSun-ExtB;-fx-font-size: 20; -fx-font-weight: bold" text="学生信息统计">
-            学生信息统计
-        </Label>
+
+        <HBox alignment="CENTER">
+            <Label alignment="CENTER" prefHeight="80.0" prefWidth="500.0"
+                   style="-fx-font-family: SimSun-ExtB;-fx-font-size: 20; -fx-font-weight: bold"
+                   text="学生信息统计">
+                学生信息统计
+            </Label>
+            <Button onAction="#save" text="导出"/>
+        </HBox>
         <VBox alignment="CENTER" prefHeight="500.0" prefWidth="1100.0" spacing="30" style="-fx-alignment: center">
             <HBox alignment="TOP_CENTER" spacing="20">
                 <TableView fx:id="sexTable" prefHeight="220.0" prefWidth="320.0"/>

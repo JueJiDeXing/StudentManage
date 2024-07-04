@@ -2,10 +2,10 @@ package com.jjdx.studentmanage.Controller;
 
 import com.jjdx.studentmanage.Util.AlertUtil;
 import com.jjdx.studentmanage.Util.ExcelUtil;
+import com.jjdx.studentmanage.pojo.Column;
 import com.jjdx.studentmanage.pojo.InfoCounter;
 import com.jjdx.studentmanage.pojo.InfoData;
 import com.jjdx.studentmanage.pojo.Student;
-import com.jjdx.studentmanage.pojo.Column;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -79,7 +79,7 @@ public class InfoController {
         List<Column> dataList = List.of(
                 new Column(tableTitle, "kind", 120),
                 new Column("人数", "cnt", 100),
-                new Column("占比", "ratio", 100 ));
+                new Column("占比", "ratio", 100));
         dataList.forEach(data -> {
             if (data.isNeedDraw()) table.getColumns().add(data.toColumn());
         });
@@ -97,17 +97,21 @@ public class InfoController {
         table.setItems(data);
     }
 
+
     /**
      保存5张表信息
      */
     public void save(ActionEvent actionEvent) {
-        System.out.println("?");
-        File file = AlertUtil.alertDirectorySave();
+        File choose = AlertUtil.alertDirectorySave();
+        int error = 0;
         for (int i = 0; i < tables.size(); i++) {
             try {
-                ExcelUtil.saveAsExcel(tables.get(i), new File(file.getPath() + "/" + tableNames.get(i)));
+                File savePos = new File(choose.getPath() + "/" + tableNames.get(i) + ".xlsx");
+                ExcelUtil.saveAsExcel(tables.get(i), savePos, false);
             } catch (Exception e) {
+                error++;
             }
         }
+        AlertUtil.alertInfo("保存了" + (tables.size() - error) + "张表\n" + "失败了" + error + "张表");
     }
 }

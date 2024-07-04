@@ -12,6 +12,12 @@ import java.time.LocalDate;
  @ Author: 绝迹的星 <br>
  @ Time: 2024/7/2 <br> */
 public class CheckUtil {
+  public   static class DataIllegalException extends RuntimeException {
+        public DataIllegalException(String message) {
+            super(message);
+        }
+    }
+
     /**
      判断非空对象
      - 特别的: 如果是String, 空格组成的也视为空

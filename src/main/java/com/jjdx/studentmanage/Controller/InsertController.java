@@ -50,13 +50,12 @@ public class InsertController {
      */
     public void insert(ActionEvent actionEvent) {
         Student student = getInfo();
-        String valid = CheckUtil.studentInsertValid(student);
-        if (valid != null) {
-          AlertUtil.alertError(valid,"hideAlert.hideInsert");
-            return;
+        String result = StudentService.insert(student);
+        if (result == null) {
+            AlertUtil.alertInfo("插入成功", "hideAlert.hideInsert");
+        } else {
+            AlertUtil.alertError(result, "hideAlert.hideInsert");
         }
-        StudentService.insert(student);
-     AlertUtil.alertInfo("插入成功","hideAlert.hideInsert");
     }
 
 

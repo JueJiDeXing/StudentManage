@@ -9,8 +9,6 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
-import javafx.util.Duration;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -56,14 +54,13 @@ public class SelectController {
      */
     public void query(ActionEvent actionEvent) {
         SelectCondition condition = getInfo();
-        String valid = CheckUtil.conditionValidInfo(condition);
-        if (valid != null) {
-            AlertUtil.alertError(valid,"hideAlert.hideSelect");
-            return;
+        try {
+            List<Student> result = StudentService.queryStudents(condition);
+            studentController.setData(result);
+            AlertUtil.alertInfo("查询成功", "hideAlert.hideSelect");
+        } catch (CheckUtil.DataIllegalException e) {
+            AlertUtil.alertError(e.getMessage(), "hideAlert.hideSelect");
         }
-        List<Student> result = StudentService.queryStudents(condition);
-        studentController.setData(result);
-        AlertUtil.alertInfo("查询成功","hideAlert.hideSelect");
     }
 
     /**

@@ -7,6 +7,6 @@ public class ClassName {
 
 
     public static String get(String dept) {
-        return dept + "2" + random.nextInt(1, 5) + random.nextInt(1, 10) + "班";
+        return dept + "2" + random.nextInt(1, 4) + random.nextInt(1, 5) + "班";
     }
 }
