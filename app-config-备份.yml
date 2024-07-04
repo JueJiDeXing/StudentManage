@@ -1,8 +1,8 @@
 hideAlert:
-  level: INFO
   hideSelect: false
   hideInsert: false
   hideUpdate: false
+  level: ERROR
 tableView:
   columns:
     学号:
@@ -19,7 +19,7 @@ tableView:
       priority: 3
     班级:
       attribute: className
-      prefWidth: 100
+      prefWidth: 150
       priority: 4
     年龄:
       attribute: age

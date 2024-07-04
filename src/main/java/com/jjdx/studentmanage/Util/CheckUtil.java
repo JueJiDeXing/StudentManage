@@ -246,12 +246,12 @@ public class CheckUtil {
         return CheckUtil.notNull(dept) && dept.matches("^[\\u4e00-\\u9fa5]{2,10}$");
     }
 
-    /**
-     合法班级, 3位数字 + '班'
-     */
-    public static boolean isValidClassName(String className) {
-        return CheckUtil.notNull(className) && className.matches("[\\u4e00-\\u9fa5]+^\\d{3}班$");
-    }
+/**
+ 合法班级, 专业 + 3位数字 + '班'
+ */
+public static boolean isValidClassName(String className) {
+    return CheckUtil.notNull(className) && className.matches("^[\\u4e00-\\u9fa5]+\\d{3}班$");
+}
 
     /**
      合法年龄, 0~100

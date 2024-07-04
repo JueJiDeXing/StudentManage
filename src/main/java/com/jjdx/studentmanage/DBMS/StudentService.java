@@ -9,6 +9,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -86,15 +88,22 @@ public class StudentService {
      插入学生
 
      @param studentList 学生信息列表
-     @return 插入结果[成功数量, 失败数量]
+     @return 插入结果, 以哈希表形式返回, [failCnt = int, failInfo = HashSet< String >], 如果返回值为null,则表示全部插入成功
      */
-    public static int[] insert(List<Student> studentList) {
-        int no = 0;
+    public static HashMap<String, Object> insert(List<Student> studentList) {
+        HashMap<String, Object> info = new HashMap<>();
+        info.put("failCnt", 0);
+        info.put("failInfo", new HashSet<>());
         for (Student student : studentList) {
             String result = insert(student);
-            if (result != null) no++;
+            if (result == null) continue;
+            // 插入失败
+            info.put("failCnt", (int) info.get("failCnt") + 1);// 失败计数
+            HashSet<String> set = (HashSet<String>) info.get("failInfo");// 失败信息
+            set.add(result);
         }
-        return new int[]{studentList.size() - no, no};
+        if ((int) info.get("failCnt") == 0) return null;// 全部成功
+        return info;
     }
 
 

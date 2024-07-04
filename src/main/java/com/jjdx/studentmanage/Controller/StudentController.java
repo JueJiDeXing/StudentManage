@@ -217,18 +217,27 @@ public class StudentController {
      批量导入学生数据
      */
     public void insertByExcel(ActionEvent actionEvent) {
+        // 选择excel文件
         File file = AlertUtil.alertExcelScan();
         if (file == null) return;
         if (!file.getName().endsWith(".xlsx")) {
             AlertUtil.alertError("不支持的文件类型");
             return;
         }
+        // 获取文件数据
+        List<Student> studentList;
         try {
-            List<Student> studentList = ExcelUtil.loadInfo(file);
-            int[] cnt = StudentService.insert(studentList);
-            AlertUtil.alertInfo("成功插入了" + cnt[0] + "条数据, 失败" + cnt[1] + "条");
+            studentList = ExcelUtil.loadInfo(file);
         } catch (Exception e) {
-            AlertUtil.alertError("导入失败");
+            AlertUtil.alertError("文件格式不正确");
+            return;
+        }
+        // 插入到数据库
+        HashMap<String, Object> result = StudentService.insert(studentList);
+        if (result == null) {
+            AlertUtil.alertInfo("导入成功");
+        } else {
+            AlertUtil.alertError("失败了" + result.get("failCnt") + "条, 因为" + result.get("failInfo"));
         }
     }
 
