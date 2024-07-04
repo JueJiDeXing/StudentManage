@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jjdx.studentmanage.Controller.SelectController">
+    <VBox alignment="CENTER" prefHeight="500.0" prefWidth="600.0" spacing="30" style="-fx-font-family: SimSun-ExtB;-fx-font-size: 15">
+        <!--表单区-->
+        <VBox alignment="CENTER" spacing="10">
+            <HBox alignment="CENTER" spacing="30">
+                <HBox alignment="CENTER">
+                    <Label text="学号: " />
+                    <TextField fx:id="id" prefWidth="150" promptText="请输入学号">
+                    </TextField>
+                </HBox>
+                <HBox alignment="CENTER">
+                    <Label text="姓名: " />
+                    <TextField fx:id="name" prefWidth="150" promptText="请输入姓名" />
+                </HBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30">
+                <HBox alignment="CENTER">
+                    <Label text="专业: " />
+                    <TextField fx:id="dept" prefWidth="150" />
+                </HBox>
+                <HBox alignment="CENTER">
+                    <Label text="班级: " />
+                    <TextField fx:id="className" prefWidth="150" />
+                </HBox>
+            </HBox>
+            <HBox alignment="CENTER">
+                <HBox alignment="CENTER">
+                    <Label text="性别: " />
+                    <ChoiceBox fx:id="sex" prefHeight="26.0" prefWidth="148.0">
+                        <String fx:value="" />
+                        <String fx:value="男" />
+                        <String fx:value="女" />
+                    </ChoiceBox>
+                </HBox>
+                <HBox alignment="CENTER">
+                    <Label style="-fx-padding: 0 0 0 20" text="政治面貌: " />
+                    <ChoiceBox fx:id="outlook" prefWidth="130">
+                        <String fx:value="" />
+                        <String fx:value="党员" />
+                        <String fx:value="共青团员" />
+                        <String fx:value="群众" />
+                    </ChoiceBox>
+                </HBox>
+
+            </HBox>
+
+            <HBox alignment="CENTER">
+                <VBox spacing="10">
+                    <Label alignment="CENTER" prefHeight="25" text="年龄: " />
+                    <Label alignment="CENTER" prefHeight="25" text="出生日期: " />
+                </VBox>
+                <VBox spacing="10">
+                    <HBox alignment="CENTER">
+                        <TextField fx:id="age_start" prefWidth="150" promptText="0" />
+                        <Label text="  --  " />
+                        <TextField fx:id="age_end" prefWidth="150" promptText="100" />
+                    </HBox>
+                    <HBox alignment="CENTER">
+                        <DatePicker fx:id="birthday_start" prefWidth="150" />
+                        <Label text="  --  " />
+                        <DatePicker fx:id="birthday_end" prefWidth="150" />
+                    </HBox>
+                </VBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="30">
+                <HBox alignment="CENTER">
+                    <Label text="籍贯: " />
+                    <TextField fx:id="nativePlace" prefWidth="150" promptText="请输入籍贯" />
+                </HBox>
+                <HBox alignment="CENTER">
+                    <Label text="邮箱: " />
+                    <TextField fx:id="email" prefWidth="150" />
+                </HBox>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10"><HBox alignment="CENTER">
+                <Label text="电话号码: " />
+                <TextField fx:id="phone" prefWidth="150" />
+            </HBox>
+
+                <HBox alignment="CENTER">
+                    <Label text="家庭住址: " />
+                    <TextField fx:id="address" prefWidth="150" promptText="请输入家庭住址" />
+                </HBox>
+            </HBox>
+        </VBox>
+        <!--按钮区-->
+        <HBox alignment="BOTTOM_CENTER" prefHeight="50" prefWidth="500" spacing="20">
+            <Button onAction="#query" text="查询" />
+            <Button onAction="#clear" text="清空条件" />
+
+        </HBox>
+    </VBox>
+</AnchorPane>

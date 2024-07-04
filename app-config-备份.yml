@@ -1,0 +1,55 @@
+hideAlert:
+  level: INFO
+  hideSelect: false
+  hideInsert: false
+  hideUpdate: false
+tableView:
+  columns:
+    学号:
+      attribute: id
+      prefWidth: 120
+      priority: 1
+    姓名:
+      attribute: name
+      prefWidth: 100
+      priority: 2
+    专业:
+      attribute: dept
+      prefWidth: 100
+      priority: 3
+    班级:
+      attribute: className
+      prefWidth: 100
+      priority: 4
+    年龄:
+      attribute: age
+      prefWidth: 100
+      priority: 5
+    性别:
+      attribute: sex
+      prefWidth: 100
+      priority: 6
+    籍贯:
+      attribute: nativePlace
+      prefWidth: 130
+      priority: 7
+    邮箱:
+      attribute: email
+      prefWidth: 160
+      priority: 8
+    出生日期:
+      attribute: birthday
+      prefWidth: 120
+      priority: 9
+    政治面貌:
+      attribute: outlook
+      prefWidth: 120
+      priority: 10
+    家庭住址:
+      attribute: address
+      prefWidth: 140
+      priority: 11
+    电话号码:
+      attribute: phone
+      prefWidth: 120
+      priority: 12

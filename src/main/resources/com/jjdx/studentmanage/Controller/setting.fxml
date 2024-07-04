@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<AnchorPane
+        xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="com.jjdx.studentmanage.Controller.SettingController"
+        style="-fx-font-family: SimSun-ExtB;-fx-font-size: 15"
+>
+    <ScrollPane hbarPolicy="NEVER" style="-fx-background-color: #eeeeee;"
+                prefWidth="500" maxWidth="500" maxHeight="500">
+        <VBox spacing="10" style="-fx-padding: 30 50 0 50">
+            <!--弹窗控制-->
+            <VBox alignment="CENTER" prefHeight="200" prefWidth="400" spacing="10"
+                  style="-fx-border-width: 1;
+                          -fx-border-color: #8d8b8b;
+                        -fx-padding: 10;">
+                <!--标题-->
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="弹窗控制: " style="-fx-font-size: 20; -fx-font-weight: bold"/>
+                </HBox>
+                <!--项-->
+                <VBox alignment="CENTER" prefHeight="200" prefWidth="400" spacing="10"
+                      style=" -fx-padding: 0 0 0 20">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <CheckBox fx:id="hideSelect" onMouseClicked="#selectChange"/>
+                        <Label text="隐藏查询弹窗"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <CheckBox fx:id="hideInsert" onMouseClicked="#insertChange"/>
+                        <Label text="隐藏插入弹窗"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" prefWidth="461.0" spacing="10">
+                        <CheckBox fx:id="hideUpdate" onMouseClicked="#updateChange"/>
+                        <Label text="隐藏更新弹窗"/>
+                    </HBox>
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <ChoiceBox fx:id="selectLevel" onHidden="#levelChange">
+                            <String fx:value="INFO"/>
+                            <String fx:value="WARNING"/>
+                            <String fx:value="ERROR"/>
+                            <String fx:value="NULL"/>
+                        </ChoiceBox>
+                        <Label text="选择弹窗级别"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+            <!--列宽控制-->
+            <VBox alignment="CENTER" prefWidth="400" spacing="10"
+                  style="-fx-border-width: 1;
+                          -fx-border-color: #8d8b8b;
+                        -fx-padding: 10">
+                <!--标题-->
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="列宽控制:" style="-fx-font-size: 20; -fx-font-weight: bold"/>
+                </HBox>
+                <!--代码中注入项-->
+                <VBox alignment="CENTER" prefWidth="400" spacing="10"
+                      style=" -fx-padding: 0 0 0 20" fx:id="widthControllerBox">
+                </VBox>
+            </VBox>
+
+            <VBox prefWidth="30"/>
+        </VBox>
+    </ScrollPane>
+
+</AnchorPane>

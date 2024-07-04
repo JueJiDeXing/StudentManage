@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jjdx.studentmanage.DBMS.StudentMapper">
+    <select id="findAllStudent" resultType="com.jjdx.studentmanage.pojo.Student">
+        SELECT *
+        FROM student
+    </select>
+
+    <select id="queryStudents" resultType="com.jjdx.studentmanage.pojo.Student">
+        SELECT * FROM student
+        WHERE 1 = 1
+        <if test="id != null and id != ''">
+            AND id = #{id}
+        </if>
+        <if test="name != null and name != ''">
+            AND name = #{name}
+        </if>
+        <if test="dept != null and dept != ''">
+            AND dept = #{dept}
+        </if>
+        <if test="className != null and className != ''">
+            AND className = #{className}
+        </if>
+        <if test="startAge != null and startAge != '' and endAge != null and endAge != ''">
+            AND age = #{age}
+        </if>
+        <if test="sex != null and sex != ''">
+            AND sex = #{sex}
+        </if>
+        <if test="startBirthday != null and startBirthday != '' and endBirthday != null and endBirthday != ''">
+            AND birthday BETWEEN #{startBirthday} AND #{endBirthday}
+        </if>
+        <if test="outlook != null and outlook != ''">
+            AND outlook = #{outlook}
+        </if>
+        <if test="nativePlace != null and nativePlace != ''">
+            AND nativePlace = #{nativePlace}
+        </if>
+        <if test="address != null and address != ''">
+            AND address = #{address}
+        </if>
+        <if test="phone != null and phone != ''">
+            AND phone = #{phone}
+        </if>
+        <if test="email != null and email != ''">
+            AND email = #{email}
+        </if>
+        ORDER BY id;
+    </select>
+<update id="update">
+    UPDATE student
+    <!--按id更新, 修改项拼接去除多余逗号-->
+    <trim prefix=" SET " suffixOverrides="," suffix=" WHERE id = #{id}; ">
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="dept != null and dept != ''">
+            dept = #{dept},
+        </if>
+        <if test="className != null and className != ''">
+            className = #{className},
+        </if>
+        <if test="age != null and age != ''">
+            age = #{age},
+        </if>
+        <if test="sex != null and sex != ''">
+            sex = #{sex},
+        </if>
+        <if test="birthday != null and birthday != ''">
+            birthday = #{birthday},
+        </if>
+        <if test="outlook != null and outlook != ''">
+            outlook = #{outlook},
+        </if>
+        <if test="nativePlace != null and nativePlace != ''">
+            nativePlace = #{nativePlace},
+        </if>
+        <if test="address != null and address != ''">
+            address = #{address},
+        </if>
+        <if test="phone != null and phone != ''">
+            phone = #{phone},
+        </if>
+        <if test="email != null and email != ''">
+            email = #{email},
+        </if>
+    </trim>
+</update>
+    <insert id="insert">
+        INSERT INTO student (id, name, dept, className, age, sex,
+                             birthday, outlook, nativePlace, address, phone, email)
+        VALUES (#{id}, #{name}, #{dept}, #{className}, #{age}, #{sex},
+                #{birthday}, #{outlook}, #{nativePlace}, #{address}, #{phone}, #{email});
+    </insert>
+
+
+    <delete id="delete">
+        DELETE
+        FROM student
+        WHERE id = #{id};
+    </delete>
+</mapper>

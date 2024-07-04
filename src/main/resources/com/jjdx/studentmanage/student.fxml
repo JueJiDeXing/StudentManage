@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="700.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jjdx.studentmanage.Controller.StudentController"
+            fx:id="root">
+    <VBox prefHeight="700.0" prefWidth="1000.0" spacing="40"
+          style="-fx-font-family: SimSun-ExtB;-fx-font-size: 15">
+        <!--行1:功能区-->
+        <HBox alignment="CENTER" prefHeight="25.0" prefWidth="1000.0">
+            <!--左区-->
+            <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="650.0" spacing="5">
+                <Button onAction="#select" mnemonicParsing="false" prefHeight="20.0" text="查询"/>
+                <Button onAction="#insert" mnemonicParsing="false" prefHeight="20.0" text="插入"/>
+                <Button onAction="#update" mnemonicParsing="false" prefHeight="20.0" text="更新"/>
+                <Button onAction="#delete" mnemonicParsing="false" prefHeight="20.0" text="删除"/>
+                <Button onAction="#info" mnemonicParsing="false" prefHeight="20.0" text="信息统计"/>
+                <Button onAction="#insertByExcel" mnemonicParsing="false" prefHeight="20.0" text="批量添加"/>
+                <Button onAction="#convertToExcel" mnemonicParsing="false" prefHeight="20.0" text="信息导出"/>
+            </HBox>
+            <!--右区-->
+            <HBox alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="350.0" spacing="5">
+                <Button onAction="#refresh" mnemonicParsing="false" text="刷新"/>
+                <Button onAction="#setting" mnemonicParsing="false" text="设置"/>
+            </HBox>
+        </HBox>
+        <!--行2:字段选中-->
+        <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1000.0" spacing="30">
+            <VBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkId" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" text="学号"
+                          selected="true"/>
+                <CheckBox fx:id="checkNativePlace" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0"
+                          text="籍贯"/>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkName" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" text="姓名"
+                          selected="true"/>
+                <CheckBox fx:id="checkEmail" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" text="邮箱"/>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkDept" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" selected="true" text="专业"/>
+                <CheckBox fx:id="checkOutlook" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0"
+                          text="政治面貌"/>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkClassName" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" selected="true" text="班级"/>
+                <CheckBox fx:id="checkBirthday" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0"
+                          text="出生日期"/>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkAge" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" text="年龄"
+                          selected="true"/>
+                <CheckBox fx:id="checkAddress" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0"
+                          text="家庭住址"/>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="100.0" spacing="10">
+                <CheckBox fx:id="checkSex" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" selected="true"
+                          text="性别"/>
+                <CheckBox fx:id="checkPhone" onAction="#chooseColumn" mnemonicParsing="false" prefHeight="20.0"
+                          prefWidth="100.0" text="电话号码"/>
+            </VBox>
+        </HBox>
+        <!--行3:数据展示区-->
+        <HBox prefHeight="600.0" prefWidth="900.0" alignment="CENTER">
+            <TableView fx:id="tableView" prefHeight="600.0" prefWidth="1000.0"
+                       style="-fx-text-alignment: 'CENTER';-fx-column-halignment: 'CENTER'">
+            </TableView>
+        </HBox>
+    </VBox>
+</AnchorPane>

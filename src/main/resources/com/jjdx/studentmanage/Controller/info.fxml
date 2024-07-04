@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="600.0" prefWidth="1100.0"
+            style="-fx-alignment: center;-fx-font-family: SimSun-ExtB;-fx-font-size: 15"
+            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.jjdx.studentmanage.Controller.InfoController">
+    <HBox prefWidth="1000" alignment="CENTER_RIGHT" style="-fx-padding: 20">
+        <Button onAction="#save">导出</Button>
+    </HBox>
+    <VBox alignment="CENTER">
+        <Label alignment="CENTER" prefHeight="80.0" prefWidth="1100.0"
+               style="-fx-font-family: SimSun-ExtB;-fx-font-size: 20; -fx-font-weight: bold" text="学生信息统计">
+            学生信息统计
+        </Label>
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="1100.0" spacing="30" style="-fx-alignment: center">
+            <HBox alignment="TOP_CENTER" spacing="20">
+                <TableView fx:id="sexTable" prefHeight="220.0" prefWidth="320.0"/>
+                <TableView fx:id="ageTable" prefHeight="220.0" prefWidth="320.0"/>
+            </HBox>
+            <HBox alignment="CENTER" spacing="20">
+                <TableView fx:id="deptTable" prefHeight="220.0" prefWidth="320.0"/>
+                <TableView fx:id="classTable" prefHeight="220.0" prefWidth="320.0"/>
+                <TableView fx:id="outlookTable" prefHeight="220.0" prefWidth="320.0"/>
+            </HBox>
+        </VBox>
+    </VBox>
+</AnchorPane>
