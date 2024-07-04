@@ -107,7 +107,7 @@ public class InfoController {
         for (int i = 0; i < tables.size(); i++) {
             try {
                 File savePos = new File(choose.getPath() + "/" + tableNames.get(i) + ".xlsx");
-                ExcelUtil.saveAsExcel(tables.get(i), savePos, false);
+                ExcelUtil.save(tables.get(i), savePos, false);
             } catch (Exception e) {
                 error++;
             }

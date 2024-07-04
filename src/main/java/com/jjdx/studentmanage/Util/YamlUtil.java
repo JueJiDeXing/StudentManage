@@ -14,12 +14,12 @@ import java.util.HashMap;
  @ Time: 2024/5/7 <br> */
 public class YamlUtil {
     private static HashMap<String, Object> yMap = new HashMap<>();//从配置文件读取的信息
-    private static String configFile = "app-config.yml";
+    private static String configFile = "app-config.yml";// 配置文件的文件名
     private static final Yaml yaml;
 
     static {
         DumperOptions options = new DumperOptions();
-        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);// 块式写入
         options.setPrettyFlow(true);
         yaml = new Yaml(options);
     }
@@ -28,7 +28,7 @@ public class YamlUtil {
     }
 
     /**
-     项目启动, 读取配置文件, 若无法读取,则停止程序运行
+     项目启动, 读取配置文件, 若无法读取,则强制停止程序运行
      */
     public static void start() {
         yMap = reLoad();
@@ -44,13 +44,15 @@ public class YamlUtil {
             yaml.dump(yMap, output);
             configFile = "app-config.yml";
         } catch (Exception e) {
-            System.out.println("配置文件更改失败 -- " + e.getMessage());
+            System.out.println("备份文件读回失败 -- " + e.getMessage());
         }
 
     }
 
     /**
-     重新加载配置文件
+     重新加载配置文件, 由于实现实时更新的效果, 所以每次都需要重新读入配置文件
+
+     @return 配置文件中的信息
      */
     private static HashMap<String, Object> reLoad() {
         try {
@@ -62,7 +64,10 @@ public class YamlUtil {
     }
 
     /**
-     获取取最后一个HashMap
+     分隔获取最后一个HashMap
+     - 返回的HashMap是可修改的, 不允许外界访问该方法
+     @param split 键名
+     @return 最后一个HashMap, 若不存在则返回null
      */
     private static HashMap<String, Object> split(String[] split) {
         HashMap<String, Object> m = new HashMap<>(yMap);
@@ -96,7 +101,7 @@ public class YamlUtil {
 
 
     /**
-     获取配置文件的值
+     获取配置文件的int值
 
      @param name 以"."分隔的键名
      @return 值, 若不存在则返回默认值0
@@ -105,7 +110,11 @@ public class YamlUtil {
         reLoad();
         return getInt(name, 0);
     }
-
+    /**
+     获取配置文件的int值
+     @param name 以"."分隔的键名
+     @param defaultVal 不存在则返回默认值
+     */
     public static int getInt(String name, int defaultVal) {
         reLoad();
         String[] split = name.split("\\.");
@@ -118,11 +127,19 @@ public class YamlUtil {
         return (int) value;
 
     }
-
+    /**
+     获取配置文件的String值
+     @param name 以"."分隔的键名
+     @return 不存在则返回默认值""
+     */
     public static String getString(String name) {
         return getString(name, "");
     }
-
+    /**
+     获取配置文件的String值
+     @param name 以"."分隔的键名
+     @param defaultVal 不存在则返回默认值
+     */
     public static String getString(String name, String defaultVal) {
         reLoad();
         String[] split = name.split("\\.");
@@ -135,6 +152,11 @@ public class YamlUtil {
         return (String) value;
     }
 
+    /**
+     获取配置文件的boolean值
+     @param name 以"."分隔的键名
+     @return 不存在则返回false
+     */
     public static boolean getBoolean(String name) {
         reLoad();
         String[] split = name.split("\\.");
@@ -154,7 +176,6 @@ public class YamlUtil {
      @param value 新值
      */
     public static void change(String name, Object value) {
-        System.out.println("------change------");
         reLoad();
         //获取最后一个map
         String[] split = name.split("\\.");
@@ -171,9 +192,10 @@ public class YamlUtil {
     }
 
     /**
-     获取最后一个map
+     获取最后一个层级对应的HashMap
 
      @param name 以"."分隔的键名, 应当以"."或".null"结尾,表示层级终止
+     @return 只读数据
      */
     public static HashMap<String, Object> getLastMap(String name) {
         reLoad();

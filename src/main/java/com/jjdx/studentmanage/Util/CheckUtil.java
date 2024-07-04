@@ -254,17 +254,17 @@ public class CheckUtil {
     }
 
     /**
-     合法年龄, (0,100)
+     合法年龄, 0~100
      */
     public static boolean isValidAge(Integer age) {
-        return CheckUtil.notNull(age) && 0 < age && age < 100;
+        return CheckUtil.notNull(age) && 0 <= age && age <= 100;
     }
 
     /**
-     合法年龄, (0,100)
+     合法年龄, 0~100
      */
     public static boolean isValidAge(String age) {
-        return CheckUtil.notNull(age) && age.length() < 3 && isValidAge(Integer.parseInt(age));
+        return CheckUtil.notNull(age) && age.length() <= 3 && isValidAge(Integer.parseInt(age));
     }
 
     /**

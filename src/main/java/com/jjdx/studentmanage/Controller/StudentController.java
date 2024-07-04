@@ -8,12 +8,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.io.File;
 import java.io.IOException;
@@ -207,7 +205,7 @@ public class StudentController {
         if (file == null) return;
         try {
             File savePos = new File(file.getPath() + "/" + "学生信息表.xlsx");
-            ExcelUtil.saveAsExcel(tableView, savePos, true);
+            ExcelUtil.save(tableView, savePos, true);
             AlertUtil.alertInfo("保存成功");
         } catch (Exception e) {
             AlertUtil.alertError("保存失败");

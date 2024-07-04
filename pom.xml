@@ -43,12 +43,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.2</version>
         </dependency>
-        <dependency>
-            <!--全局键盘监听-->
-            <groupId>com.github.kwhat</groupId>
-            <artifactId>jnativehook</artifactId>
-            <version>2.2.2</version>
-        </dependency>
+
         <dependency>
             <!--excel交互-->
             <groupId>org.apache.poi</groupId>
@@ -74,6 +69,12 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
             <version>17.0.6</version>
+        </dependency>
+        <dependency>
+            <!--全局键盘监听-->
+            <groupId>com.github.kwhat</groupId>
+            <artifactId>jnativehook</artifactId>
+            <version>2.2.2</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>

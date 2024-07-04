@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,71 +25,97 @@ import java.util.List;
  @ Author: 绝迹的星 <br>
  @ Time: 2024/7/2 <br> */
 public class ExcelUtil {
+
+    private ExcelUtil() {// 无实例
+    }
+
     /**
      保存表信息到excel
 
-     @param table 表
-     @param file  保存位置
+     @param tableView    表
+     @param file         保存位置
+     @param skipFirstCOl 第一列是否需要导出
      */
-    public static void saveAsExcel(TableView table, File file, boolean withOrderId) throws IOException {
-        Workbook workbook = new XSSFWorkbook();
-        Sheet sheet = workbook.createSheet(file.getName());
-
-        ObservableList<TableColumn> columns = table.getColumns();
-        Row headerRow = sheet.createRow(0);
-        int offset = withOrderId ? 1 : 0;// 如果有序号, 则跳过第一列
+    public static void save(TableView tableView, File file, boolean skipFirstCOl) throws IOException {
+        Workbook workbook = new XSSFWorkbook();// 创建工作文件
+        Sheet sheet = workbook.createSheet(file.getName());// 建表
+        int offset = skipFirstCOl ? 1 : 0;// 是否跳过第一列
+        ObservableList<TableColumn> columns = tableView.getColumns();// 从TableView中获取列
+        // 创建标题行
+        Row sheetHeadRow = sheet.createRow(0);
         for (int i = offset; i < columns.size(); i++) {// 创建标题行
-            headerRow.createCell(i - offset).setCellValue(columns.get(i).getText());
+            String columnName = columns.get(i).getText();// 列名
+            sheetHeadRow.createCell(i - offset).setCellValue(columnName);
         }
-        int rowIndex = 1;
-        for (Object row : table.getItems()) {// 数据行
-            Row dataRow = sheet.createRow(rowIndex++);
+        // 设置数据行
+        int rowIndex = 1;// 行索引, 第一行为标题行
+        for (Object tableRow : tableView.getItems()) {
+            Row sheetDataRow = sheet.createRow(rowIndex++);
             for (int i = offset; i < columns.size(); i++) {
-                dataRow.createCell(i - offset).setCellValue(columns.get(i).getCellData(row).toString());
+                String tableCellData = columns.get(i).getCellData(tableRow).toString();// 数据
+                sheetDataRow.createCell(i - offset).setCellValue(tableCellData);// 设置单元格数据
             }
             try (FileOutputStream fos = new FileOutputStream(file)) {
                 workbook.write(fos);
             }
         }
+        workbook.close();
     }
 
     /**
      加载excel文件
+
+     @param file excel文件, 格式若不正确则抛出异常
      */
-    public static List<Student> loadInfo(File file) throws IOException {
+    public static List<Student> loadInfo(@NotNull File file) throws IOException {
+        if (!file.exists() || !file.getName().endsWith("xlsx")) {
+            throw new IllegalArgumentException("文件格式不正确");
+        }
         List<Student> students = new ArrayList<>();
         Workbook workbook = new XSSFWorkbook(new FileInputStream(file));
         Sheet sheet = workbook.getSheetAt(0);
-        Row headerRow = sheet.getRow(0);
-        int numColumns = headerRow.getLastCellNum();
+        Row sheetHead = sheet.getRow(0);
 
-        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+        int numCols = sheetHead.getLastCellNum(); // 总行数
+        int numRows = sheet.getLastRowNum();// 总列数
+
+        for (int i = 1; i <= numRows; i++) {
             Row row = sheet.getRow(i);
             if (row == null) continue;
-            Student student = new Student();
-            for (int j = 0; j < numColumns; j++) {
-                Cell cell = row.getCell(j);
-                if (cell == null) continue;
-                switch (headerRow.getCell(j).getStringCellValue()) {
-                    case "学号" -> student.setId(cell.getStringCellValue());
-                    case "姓名" -> student.setName(cell.getStringCellValue());
-                    case "专业" -> student.setDept(cell.getStringCellValue());
-                    case "班级" -> student.setClassName(cell.getStringCellValue());
-                    case "年龄" -> student.setAge(Integer.parseInt(cell.getStringCellValue()));
-                    case "性别" -> student.setSex(cell.getStringCellValue());
-                    case "生日" -> student.setBirthday(cell.getDateCellValue().toInstant()
-                            .atZone(ZoneId.systemDefault()).toLocalDate());
-                    case "政治面貌" -> student.setOutlook(cell.getStringCellValue());
-                    case "籍贯" -> student.setNativePlace(cell.getStringCellValue());
-                    case "家庭住址" -> student.setAddress(cell.getStringCellValue());
-                    case "手机号" -> student.setPhone(cell.getStringCellValue());
-                    case "邮箱" -> student.setEmail(cell.getStringCellValue());
-                }
-            }
+            Student student = createStudent(numCols, row, sheetHead);
             students.add(student);
         }
         workbook.close();
         return students;
+    }
+
+    /**
+     从行中创建一个学生对象
+     */
+    private static Student createStudent(int numCols, Row row, Row headerRow) {
+        Student student = new Student();
+        for (int i = 0; i < numCols; i++) {
+            Cell cell = row.getCell(i);
+            if (cell == null) continue;
+            String value = cell.getStringCellValue();
+            switch (headerRow.getCell(i).getStringCellValue()) {
+                // 注意事项: 配置文件中的字段 = excel表的列名 = case项
+                case "学号" -> student.setId(value);
+                case "姓名" -> student.setName(value);
+                case "专业" -> student.setDept(value);
+                case "班级" -> student.setClassName(value);
+                case "年龄" -> student.setAge(Integer.parseInt(value));
+                case "性别" -> student.setSex(value);
+                case "籍贯" -> student.setNativePlace(value);
+                case "邮箱" -> student.setEmail(value);
+                case "出生日期" -> student.setBirthday(cell.getDateCellValue().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate());
+                case "政治面貌" -> student.setOutlook(value);
+                case "家庭住址" -> student.setAddress(value);
+                case "电话号码" -> student.setPhone(value);
+            }
+        }
+        return student;
     }
 
 }
